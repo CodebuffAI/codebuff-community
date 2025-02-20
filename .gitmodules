@@ -19,3 +19,6 @@
 [submodule "showcase/vending-machine"]
 	path = showcase/vending-machine
 	url = https://github.com/ShAIWhisperer/vending-machine.git
+[submodule "showcase/tdd-web-automation"]
+	path = showcase/tdd-web-automation
+	url = https://github.com/ShAIWhisperer/tdd-web-automation.git

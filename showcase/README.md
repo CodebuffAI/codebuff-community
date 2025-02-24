@@ -17,13 +17,6 @@ Community showcase of projects built by Codebuff
 - [TDD Web Automation](https://github.com/ShAIWhisperer/tdd-web-automation) - A React-based web application demonstrating form automation testing using Playwright, uisng Test Driven Development (TDD)
 - [Vending Machine](https://github.com/ShAIWhisperer/vending-machine) - A fun little vending machine web and cli
 
-## Vending Machine
-A showcase project demonstrating a modern vending machine interface with:
-- Interactive UI with animations
-- Product selection and purchase flow
-- Testing implementation
-- [Link to repository](https://github.com/ShAIWhisperer/vending-machine)
-
 ## Cloning
 
 This repository contains submodules. To clone including all showcase projects, use:

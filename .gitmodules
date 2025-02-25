@@ -22,3 +22,6 @@
 [submodule "showcase/tdd-web-automation"]
 	path = showcase/tdd-web-automation
 	url = https://github.com/ShAIWhisperer/tdd-web-automation.git
+[submodule "showcase/timer"]
+	path = showcase/timer
+	url = https://github.com/charleslien/timer.git

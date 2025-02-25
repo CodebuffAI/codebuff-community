@@ -16,6 +16,7 @@ Community showcase of projects built by Codebuff
 - [Calendar On Air](https://gist.github.com/dhunten/7f88654f3972bfe0fc6d70a1b5fa024a/b2e2b25e788ca7a50c42f3a5a991f4b860e37306) - An app built with CircuitPython that pulls time and weather data + a user's calendar events from the internet and displays it on an LCD screen
 - [TDD Web Automation](https://github.com/ShAIWhisperer/tdd-web-automation) - A React-based web application demonstrating form automation testing using Playwright, uisng Test Driven Development (TDD)
 - [Vending Machine](https://github.com/ShAIWhisperer/vending-machine) - A fun little vending machine web and cli
+- [Timer App](https://github.com/charleslien/timer.git) - A timer app by [Charles Lien](https://github.com/charleslien) to track various tasks over the years.
 
 ## Cloning
 

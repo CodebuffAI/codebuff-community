@@ -1,0 +1,19 @@
+{
+  "description": "Real-time chat application with Convex backend and Next.js frontend",
+  "startupProcesses": [
+    {
+      "name": "dev",
+      "command": "npm run dev",
+      "enabled": true,
+      "stdoutFile": "logs/dev.log",
+      "stderrFile": "logs/dev.log"
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck -- --watch",
+      "enabled": true,
+      "stdoutFile": "logs/typecheck.log",
+      "stderrFile": "logs/typecheck.log"
+    }
+  ]
+}

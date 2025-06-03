@@ -5,15 +5,14 @@
       "name": "dev",
       "command": "npm run dev",
       "enabled": true,
-      "stdoutFile": "logs/dev.log",
-      "stderrFile": "logs/dev.log"
-    },
+      "stdoutFile": "logs/dev.log"
+    }
+  ],
+  "fileChangeHooks": [
     {
       "name": "typecheck",
-      "command": "npm run typecheck -- --watch",
-      "enabled": true,
-      "stdoutFile": "logs/typecheck.log",
-      "stderrFile": "logs/typecheck.log"
+      "command": "npm run typecheck",
+      "enabled": true
     }
   ]
 }

@@ -1,19 +1,18 @@
 {
-  "description": "Real-time chat application with Convex backend and Next.js frontend",
+  "description": "Template configuration for this project. See https://www.codebuff.com/config for all options.",
   "startupProcesses": [
     {
       "name": "dev",
       "command": "npm run dev",
       "enabled": true,
-      "stdoutFile": "logs/dev.log",
-      "stderrFile": "logs/dev.log"
-    },
+      "stdoutFile": "logs/dev.log"
+    }
+  ],
+  "fileChangeHooks": [
     {
       "name": "typecheck",
-      "command": "npm run typecheck -- --watch",
-      "enabled": true,
-      "stdoutFile": "logs/typecheck.log",
-      "stderrFile": "logs/typecheck.log"
+      "command": "npm run typecheck",
+      "enabled": true
     }
   ]
 }

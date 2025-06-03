@@ -1,4 +1,16 @@
 {
   "description": "Template configuration for this project. See https://www.codebuff.com/config for all options.",
-  "startupProcesses": []
+  "startupProcesses": [],
+  "fileChangeHooks": [
+    {
+      "name": "lint",
+      "command": "python3 -m flake8 .",
+      "enabled": true
+    },
+    {
+      "name": "test",
+      "command": "python3 -m unittest discover -s tests",
+      "enabled": true
+    }
+  ]
 }

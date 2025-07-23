@@ -35,6 +35,15 @@ cleanup() {
 }
 trap cleanup SIGINT SIGTERM EXIT
 
+# Determine correct 'stat' syntax based on platform (BSD/macOS vs GNU/Linux)
+if stat -c %Y / >/dev/null 2>&1; then
+    # GNU stat (Linux)
+    STAT_CMD="stat -c"
+else
+    # BSD stat (macOS, FreeBSD, etc.)
+    STAT_CMD="stat -f"
+fi
+
 # Get the directory where this script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -51,10 +60,10 @@ if ! docker images codebuff --format "{{.ID}}" | grep -q .; then
     docker build -t codebuff "$SCRIPT_DIR" || { error "Failed to build Docker image"; exit 1; }
 else
     # Always rebuild if any of the scripts have been modified
-    DOCKERFILE_MTIME=$(stat -f %m "$SCRIPT_DIR/Dockerfile")
-    WRAPPER_MTIME=$(stat -f %m "$SCRIPT_DIR/codebuff-wrapper.sh")
-    ENTRYPOINT_MTIME=$(stat -f %m "$SCRIPT_DIR/entrypoint.sh")
-    BRIDGE_MTIME=$(stat -f %m "$SCRIPT_DIR/message-bridge.sh")
+    DOCKERFILE_MTIME=$($STAT_CMD %m "$SCRIPT_DIR/Dockerfile")
+    WRAPPER_MTIME=$($STAT_CMD %m "$SCRIPT_DIR/codebuff-wrapper.sh")
+    ENTRYPOINT_MTIME=$($STAT_CMD %m "$SCRIPT_DIR/entrypoint.sh")
+    BRIDGE_MTIME=$($STAT_CMD %m "$SCRIPT_DIR/message-bridge.sh")
 
     # Get the most recent modification time
     LATEST_MTIME=$DOCKERFILE_MTIME
@@ -65,7 +74,7 @@ else
     done
 
     debug "Latest modification time: $LATEST_MTIME"
-    debug "Raw modification time: $(stat -f %Sm "$SCRIPT_DIR/Dockerfile")"
+    debug "Raw modification time: $($STAT_CMD %Sm "$SCRIPT_DIR/Dockerfile")"
 
     # Always rebuild for now - safer while we're actively developing
     log "Scripts may have been modified. Rebuilding image..."

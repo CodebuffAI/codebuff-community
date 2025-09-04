@@ -32,6 +32,7 @@ pip install dist/*.whl
 ```
 
 ## Project Structure
+
 - `cli/` - Source files
 - `tests/` - Test files
 - `pyproject.toml` - Project configuration

@@ -1,0 +1,82 @@
+name: Test Version Management
+
+on:
+  push:
+    branches: [ main, develop ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-version:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for version tools that use git
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package and dev dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: Test version can be imported
+        run: |
+          python -c "import cli; print(f'Package version: {cli.__version__}')"
+
+      - name: Test importlib.metadata version access
+        run: |
+          python -c "import importlib.metadata; version = importlib.metadata.version('cli'); print(f'Metadata version: {version}')"
+
+      - name: Verify version consistency
+        run: |
+          # Get version from package import
+          IMPORT_VERSION=$(python -c "import cli; print(cli.__version__)")
+          # Get version from metadata
+          METADATA_VERSION=$(python -c "import importlib.metadata; print(importlib.metadata.version('cli'))")
+
+          echo "Import version: $IMPORT_VERSION"
+          echo "Metadata version: $METADATA_VERSION"
+
+          if [ "$IMPORT_VERSION" != "$METADATA_VERSION" ]; then
+            echo "ERROR: Version mismatch between import and metadata!"
+            exit 1
+          fi
+
+          echo "SUCCESS: Version consistency verified"
+
+
+      - name: Run type checking and formatting
+        run: |
+          mypy cli
+          black --check cli
+
+      # Only run on tag pushes to verify git tag matches version
+      - name: Verify version matches git tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          # Extract version from git tag (e.g., 'v1.2.3' -> '1.2.3')
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          # Get version from installed package
+          INSTALLED_VERSION=$(python -c "import importlib.metadata; print(importlib.metadata.version('cli'))")
+
+          echo "Git tag version: $TAG_VERSION"
+          echo "Installed version: $INSTALLED_VERSION"
+
+          if [ "$TAG_VERSION" != "$INSTALLED_VERSION" ]; then
+            echo "ERROR: Git tag version doesn't match installed version!"
+            exit 1
+          fi
+
+          echo "SUCCESS: Git tag and installed versions match"

@@ -1,3 +1,14 @@
 """A Python CLI application."""
 
-__version__ = "0.1.0"
+from importlib.metadata import PackageNotFoundError, version
+
+try:
+    __version__ = version("cli")
+except PackageNotFoundError:
+    # Package not installed, fallback for development
+    try:
+        import toml  # type: ignore[import-untyped]
+
+        __version__ = toml.load("pyproject.toml")["project"]["version"]
+    except Exception:
+        __version__ = "unknown"

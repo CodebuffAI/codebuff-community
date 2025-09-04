@@ -1,28 +1,29 @@
 [project]
 name = "cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python CLI application"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "mypy>=1.8.0",
-    "black>=24.1.1",
-    "pytest>=8.0.0",
+    "black>=25.1.0",
+    "mypy>=1.17.1",
+    "pytest>=8.4.2",
+    "toml>=0.10.2",  # In case someone forgets to run `pip install -e ".[dev]"`
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 strict = true
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
-
-[tool.black]
-line-length = 88
-target-version = ['py38']
